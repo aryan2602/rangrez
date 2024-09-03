@@ -2,6 +2,9 @@ package com.rangrez;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 public class RangrezApplication {
@@ -13,7 +16,7 @@ public class RangrezApplication {
 
 @RestController
 @RequestMapping("v1/api")
-class DemoController(){
+class DemoController{
 	
 	@GetMapping("/hello")
 	public String getHello(){

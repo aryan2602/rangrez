@@ -1,31 +1,19 @@
-FROM maven:3.9.1-openjdk-21 AS build
-
-# Set the working directory
-WORKDIR /app
-
-# Copy the Maven configuration file
+FROM maven:3.8.8-amazoncorretto-8 AS build
 COPY pom.xml .
+RUN mvn clean package
 
-# Download the dependencies
-RUN mvn dependency:go-offline
+FROM openjdk:21-slim
 
-# Copy the source code
-COPY src /app/src
+COPY target/rangrez-0.0.1-SNAPSHOT.jar /app/rangrez-0.0.1-SNAPSHOT.jar
 
-# Build the project
-RUN mvn package
+LABEL maintainer="dhiraj deshmukh"
 
-# Use the official OpenJDK 21 image to run the application
-FROM openjdk:21-jdk-slim
-
-# Set the working directory
-WORKDIR /app
 
 # Copy the built JAR file from the build stage
-COPY --from=build /app/target/rangrez-0.0.1-SNAPSHOT.jar /app/rangrez-0.0.1-SNAPSHOT.jar
+COPY target/rangrez-0.0.1-SNAPSHOT.jar rangrez-0.0.1-SNAPSHOT.jar
 
 # Expose the port the app runs on
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "/app/rangrez-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "rangrez-0.0.1-SNAPSHOT.jar"]
