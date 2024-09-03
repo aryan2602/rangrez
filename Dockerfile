@@ -4,10 +4,7 @@ RUN mvn clean package
 
 FROM openjdk:21-slim
 
-COPY target/rangrez-0.0.1-SNAPSHOT.jar /app/rangrez-0.0.1-SNAPSHOT.jar
-
 LABEL maintainer="dhiraj deshmukh"
-
 
 # Copy the built JAR file from the build stage
 COPY target/rangrez-0.0.1-SNAPSHOT.jar rangrez-0.0.1-SNAPSHOT.jar
